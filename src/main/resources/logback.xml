@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- configuration -->
+<configuration debug="true">
+   <!-- Appender: 언제, 어디에, 어떤 로그를 찍을지 설정 -->
+   
+   <!-- Console Appender: 콘솔에 로그 출력 -->
+   <appender name="consoleAppender" class="ch.qos.logback.core.ConsoleAppender">
+      <!-- 로그 포맷 설정 -->
+      <encoder>
+         <charset>UTF-8</charset>
+         <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</Pattern>
+      </encoder>
+   </appender>
+   
+   <!-- RollingFileAppender: 파일에 로그 기록 -->
+   <appender name="fileAppender" class="ch.qos.logback.core.rolling.RollingFileAppender">
+      <!-- 로그 파일 경로 지정 -->
+      <file>\log-myportal\myportal.log</file>
+      <!-- 로그 포맷 설정 -->
+      <encoder>
+         <charset>UTF-8</charset>
+         <Pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{5} - %msg%n</Pattern>
+      </encoder>
+      <!-- 로그 롤링 정책 -->
+      <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
+         <fileNamePattern>
+         \log-myportal\myportal.%i.log.zip
+         </fileNamePattern>
+         <MinIndex>1</MinIndex>
+         <MaxIndex>10</MaxIndex>
+      </rollingPolicy>
+      <!-- 로그 롤링을 수행하는 조건 -->
+      <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+         <MAXFileSize>10MB</MAXFileSize>
+      </triggeringPolicy>
+   </appender>
+   
+   <!-- Logger 등록 -->
+   <logger name="com.bitacademy.myportal" level="debug">
+      <appender-ref ref="consoleAppender" />
+      
+   </logger>
+   
+   <root level="trace">
+      <appender-ref ref="fileAppender" />
+   </root>
+</configuration>
